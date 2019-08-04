@@ -8,6 +8,14 @@ The SPL interface.
 #include <stdio.h>
 #include <string.h>
 
+/* POSIX standard, should be available on all Linux. Provides dirname() */
+#include <libgen.h>
+
+/* Points to the directory containing the compiled spl binary.
+ * Used to resolve path to 'splconstants.cfg', regardless of
+ * which directory spl is run from. */
+const char* spl_dir_path;
+
 extern FILE *yyin;
 
 int out_linecount = 0;
@@ -136,10 +144,17 @@ void add_predefined_constants()
     char name[CONSTANT_NAME_MAX_LEN];
     FILE *c_fp;
 
-    c_fp = fopen("splconstants.cfg", "r");
+    char splconstants_filename[1024] = "";
+    strcat(splconstants_filename, spl_dir_path) ;
+    strcat(splconstants_filename, "/");
+    strcat(splconstants_filename, "splconstants.cfg");
+
+    c_fp = fopen(splconstants_filename, "r");
     if (!c_fp)
     {
-        printf("\nUnable to open splconstants.cfg file!\nExiting\n");
+        printf("\n");
+        printf("Unable to open constants file: '%s'!\n", splconstants_filename);
+        printf("Exiting\n");
         exit(0);
     }
 
@@ -1436,6 +1451,19 @@ void codegen(node *root)
 
 int main(int argc, char **argv)
 {
+    /* Most shells like bash, ksh provides path to the
+     * executable being run as the environment var $_ */
+    const char* binary_path = getenv("_");
+    if(binary_path) {
+        char _path[1024];
+        /* resolve symlinks if any */
+        realpath(binary_path, _path);
+        spl_dir_path = strdup(dirname(_path));
+    } else {
+        /* if $_ env var is not present, use . as the dir path. */
+        spl_dir_path = ".";
+    }
+
     char filename[FILENAME_MAX_LEN], op_name[FILENAME_MAX_LEN], ch;
     FILE *input_fp;
 
