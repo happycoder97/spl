@@ -70,7 +70,7 @@ stmt:           expr ASSIGNOP expr ';'          {
                                                     else
                                                     {
                                                         printf("\n%d: Invalid operands in assignment!!\n", linecount);
-                                                        exit(0);
+                                                        exit(1);
                                                     }
                                                 }
                 |expr ASSIGNOP PORT ';'         {
@@ -82,7 +82,7 @@ stmt:           expr ASSIGNOP expr ';'          {
                                                     else
                                                     {
                                                         printf("\n%d: Invalid operands in assignment!!\n",  linecount);
-                                                        exit(0);
+                                                        exit(1);
                                                     }
                                                 }
                 |ifpad expr THEN stmtlist ENDIF ';'     {
@@ -125,7 +125,7 @@ stmt:           expr ASSIGNOP expr ';'          {
                                                             if (flag_break == 0)
                                                             {
                                                                 printf("\n%d: break or continue should be used inside while!!\n", linecount);
-                                                                exit(0);
+                                                                exit(1);
                                                             }
                                                             $$=$1;
                                                         }
@@ -133,7 +133,7 @@ stmt:           expr ASSIGNOP expr ';'          {
                                                 if (flag_break==0)
                                                 {
                                                     printf("\n%d: break or continue should be used inside while!!\n", linecount);
-                                                    exit(0);
+                                                    exit(1);
                                                 }
                                                 $$ = $1;
                                             }
@@ -157,7 +157,7 @@ stmt:           expr ASSIGNOP expr ';'          {
                                                 if (node_getType($2) != NODE_REG || !isAllowedRegister($2->value))
                                                 {
                                                     printf("\n%d: Invalid operand in read!!\n", linecount);
-                                                    exit(0);
+                                                    exit(1);
                                                 }
                                                 $$ = create_tree($1, $2, NULL, NULL);
                                             }
@@ -174,7 +174,7 @@ stmt:           expr ASSIGNOP expr ';'          {
                                                 if (node_getType($2) != NODE_REG || !isAllowedRegister($2->value))
                                                 {
                                                     printf("\n%d: Invalid operand in encrypt!!\n", linecount);
-                                                    exit(0);
+                                                    exit(1);
                                                 }
                                                 $$ = create_tree($1, $2, NULL, NULL);
                                             }

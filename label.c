@@ -42,7 +42,7 @@ label *label_add(const char *name)
     if (label_get(name) != NULL)
     {
         fprintf(stderr, "\n%d: Label '%s' redeclared.", linecount, name);
-        exit(0);
+        exit(1);
     }
 
     new_label = _label_create(name);

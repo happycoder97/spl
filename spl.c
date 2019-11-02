@@ -76,14 +76,14 @@ void push_alias(char *name, int reg)
     if (lookup_constant(name) != NULL)
     {
         printf("\n%d: Alias name %s already used as symbolic contant!!\n", linecount, name);
-        exit(0);
+        exit(1);
     }
 
     temp = lookup_alias(name);
     if (temp != NULL && temp->depth == depth)
     {
         printf("\n%d: Alias name %s already used as in the current block!!\n", linecount, name);
-        exit(0);
+        exit(1);
     }
     else
     {
@@ -133,7 +133,7 @@ void insert_constant(char *name, int value)
     else
     {
         printf("\n%d: Multiple Definitions for constant %s!!\n", linecount, name);
-        exit(0);
+        exit(1);
     }
 }
 
@@ -155,7 +155,7 @@ void add_predefined_constants()
         printf("\n");
         printf("Unable to open constants file: '%s'!\n", splconstants_filename);
         printf("Exiting\n");
-        exit(0);
+        exit(1);
     }
 
     while (!feof(c_fp))
@@ -189,7 +189,7 @@ node *substitute_id(node *id)
     if (temp2 == NULL)
     {
         printf("\n%d: Unknown identifier %s used!!\n", linecount, id->name);
-        exit(0);
+        exit(1);
     }
 
     id->nodetype = NODE_REG;
@@ -251,7 +251,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -293,7 +293,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -335,7 +335,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -377,7 +377,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -419,7 +419,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -461,7 +461,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -503,7 +503,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -545,7 +545,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -581,7 +581,7 @@ void codegen(node *root)
         if (regcount == 5)
         {
             printf("Register Overflow. Please reduce size of your expression.\n");
-            exit(0);
+            exit(1);
         }
         if (root->ptr1->nodetype == NODE_REG)
         {
@@ -616,7 +616,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else if (root->ptr2->nodetype == NODE_NUM)
@@ -627,7 +627,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -674,7 +674,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else if (root->ptr2->nodetype == NODE_NUM)
@@ -685,7 +685,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -696,7 +696,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
                 codegen(root->ptr2);
                 out_linecount++;
@@ -741,7 +741,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else if (root->ptr2->nodetype == NODE_NUM)
@@ -752,7 +752,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -799,7 +799,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else if (root->ptr2->nodetype == NODE_NUM)
@@ -810,7 +810,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -821,7 +821,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
                 codegen(root->ptr2);
                 out_linecount++;
@@ -866,7 +866,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else if (root->ptr2->nodetype == NODE_NUM)
@@ -877,7 +877,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
             }
             else
@@ -888,7 +888,7 @@ void codegen(node *root)
                 if (regcount == 5)
                 {
                     printf("Register Overflow. Please reduce size of your expression.\n");
-                    exit(0);
+                    exit(1);
                 }
                 codegen(root->ptr2);
                 out_linecount++;
@@ -1072,7 +1072,7 @@ void codegen(node *root)
         if (regcount == 5)
         {
             printf("Register Overflow. Please reduce size of your expression.\n");
-            exit(0);
+            exit(1);
         }
         break;
 
@@ -1083,7 +1083,7 @@ void codegen(node *root)
         if (regcount == 5)
         {
             printf("Register Overflow. Please reduce size of your expression.\n");
-            exit(0);
+            exit(1);
         }
         break;
 
@@ -1359,7 +1359,7 @@ void codegen(node *root)
         if (regcount == 5)
         {
             printf("Register Overflow. Please reduce size of your expression.\n");
-            exit(0);
+            exit(1);
         }
         break;
 
@@ -1416,7 +1416,7 @@ void codegen(node *root)
             if (label_get(root->ptr1->name) == NULL)
             {
                 fprintf(stderr, "%d: Label '%s' is not declared", root->value, root->ptr1->name);
-                exit(0);
+                exit(1);
             }
             else
             {
